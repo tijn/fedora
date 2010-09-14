@@ -1,6 +1,6 @@
 Summary: redis
 Name: redis
-Version: 1.02
+Version: 2.0.1
 Release: 1
 License: BSD
 Group: Applications/Multimedia
@@ -134,7 +134,8 @@ glueoutputbuf yes
 # string in your dataset, but performs lookups against the shared objects
 # pool so it uses more CPU and can be a bit slower. Usually it's a good
 # idea.
-shareobjects no
+# Tijn: seems to be removed: http://antirez.com/post/redis-weekly-update-4.html
+#shareobjects no
 EOF
 
 %{__cat} <<EOF >redis.logrotate
@@ -248,7 +249,7 @@ mkdir -p %{buildroot}%{_localstatedir}/log/redis
 mkdir -p %{buildroot}%{_localstatedir}/run/redis
 
 %pre
-/usr/sbin/useradd -c 'Redis' -u 499 -s /sbin/nologin -r -d %{_localstatedir}/lib/redis redis 2> /dev/null || :
+/usr/sbin/useradd -c 'Redis' -s /sbin/nologin -r -d %{_localstatedir}/lib/redis redis 2> /dev/null || :
 
 %preun
 if [ $1 = 0 ]; then
